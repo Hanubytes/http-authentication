@@ -1,0 +1,41 @@
+Bearer Token Authentication
+Overview
+
+Bearer Token Authentication is a widely used authentication scheme in OAuth 2.0, where a client presents an access token, known as a Bearer Token, to access protected resources. This token is issued by an Authorization Server (AS) and represents the client’s authorization to access specific resources.
+
+Key Characteristics
+
+Token Format: Bearer Tokens are opaque strings, not intended to have any meaning to clients using them. They are typically generated using a random string of characters.
+Authorization Scheme: The Bearer Token is sent in the “Authorization” header of an HTTP request, using the “Bearer” scheme (e.g., Authorization: Bearer <token_value>).
+Server Verification: The server verifies the received Bearer Token by checking its validity, expiration, and scope. If valid, the server grants access to the requested resource.
+Security: Bearer Tokens are typically sent over an encrypted connection (HTTPS) to prevent unauthorized access.
+Usage
+
+OAuth 2.0 Flows: Bearer Tokens are obtained through OAuth 2.0 authorization flows, such as the Authorization Code Flow or the Implicit Flow.
+Client Configuration: Clients must configure the Bearer Token authentication scheme by specifying the token’s value and any necessary refresh token logic.
+Request Header: The client includes the Bearer Token in the “Authorization” header of each request to access protected resources.
+Example
+
+In a Ktor client, the Bearer Token authentication scheme is configured as follows:
+
+install(Auth) {
+    bearer {
+        loadTokens {
+            // Load tokens from a local storage and return them as the BearerTokens instance
+            BearerTokens("abc123", "xyz111")
+        }
+    }
+}
+
+In this example, the loadTokens callback loads cached tokens from a local storage and returns them as a BearerTokens instance. The abc123 access token is sent with each request in the “Authorization” header using the “Bearer” scheme.
+
+RFC 6750
+
+The OAuth 2.0 Bearer Token Usage specification (RFC 6750) defines the Bearer Token authentication scheme and its usage. According to the specification:
+
+“A Bearer Token is an opaque string, not intended to have any meaning to clients using it.”
+“The Bearer authentication scheme is intended primarily for server authentication using the WWW-Authenticate and Authorization HTTP headers but does not preclude its use for proxy authentication.”
+“Clients SHOULD make authenticated requests with a bearer token using the ‘Authorization’ request header field with the ‘Bearer’ HTTP authorization scheme.”
+Conclusion
+
+Bearer Token Authentication is a widely used and secure authentication scheme in OAuth 2.0, providing a simple and efficient way for clients to access protected resources. By understanding the key characteristics, usage, and configuration of Bearer Tokens, developers can effectively implement this scheme in their applications.
